@@ -3,6 +3,7 @@ package br.com.raca.gatos.controller;
 import br.com.raca.gatos.controller.api.RacaApi;
 import br.com.raca.gatos.model.RacaDto;
 import br.com.raca.gatos.service.RacaService;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

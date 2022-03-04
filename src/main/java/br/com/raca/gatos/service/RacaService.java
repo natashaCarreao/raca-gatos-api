@@ -36,7 +36,7 @@ public class RacaService {
         this.fotoInfoService = fotoInfoService;
     }
 
-    public List<Raca>  buscarRacasCatsAPI(String limite) throws DataFormatException {
+    public List<Raca>  buscarRacasCatsAPI(String limite) {
 
         log.info("Inicia Busca de Breeds em The Cats API");
         var breeds = theCatsClient.getBreeds(limite);
@@ -85,7 +85,7 @@ public class RacaService {
 
     public Boolean verificaCargaTabela() {
         log.info("Iniciando validacao de carga de dados de Raca");
-        return racaRepository.findAll(PageRequest.of(0, 1)).isEmpty();
+        return !racaRepository.existsBy();
     }
 
     private RacaDto transformarRacaEntityEmRacaDto(Raca raca){

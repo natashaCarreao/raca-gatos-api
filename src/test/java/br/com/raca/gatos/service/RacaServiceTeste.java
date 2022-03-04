@@ -1,4 +1,4 @@
-package br.com.dashbaoard.cats.service;
+package br.com.raca.gatos.service;
 
 import br.com.raca.gatos.client.TheCatsClient;
 import br.com.raca.gatos.entity.FotoInfo;
@@ -8,9 +8,6 @@ import br.com.raca.gatos.model.rest.BreedResponse;
 import br.com.raca.gatos.model.rest.ImagesResponse;
 import br.com.raca.gatos.repository.FotoInfoRepository;
 import br.com.raca.gatos.repository.RacaRepository;
-import br.com.raca.gatos.service.CategoriaService;
-import br.com.raca.gatos.service.FotoInfoService;
-import br.com.raca.gatos.service.RacaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -25,14 +22,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RacaServiceTest {
+public class RacaServiceTeste {
 
     @Mock
     private TheCatsClient theCatsClient;
@@ -62,7 +60,7 @@ public class RacaServiceTest {
     }
 
     @Test
-    void testBuscarRacasCatsAPIeSalvar() throws DataFormatException {
+    void testeBuscarRacasCatsAPIeSalvar() throws DataFormatException {
         List<BreedResponse> breedResponses = new ArrayList<>();
         var breedResponse = new BreedResponse();
         breedResponse.setImagesResponse(new ImagesResponse());
@@ -80,28 +78,7 @@ public class RacaServiceTest {
     }
 
     @Test
-    void testBuscarRacasCatsAPIeSalvarException() throws DataFormatException {
-        List<BreedResponse> breedResponses = new ArrayList<>();
-        var breedResponse = new BreedResponse();
-        breedResponse.setImagesResponse(new ImagesResponse());
-        breedResponses.add(breedResponse);
-
-        when(theCatsClient.getBreeds(anyString())).thenReturn(breedResponses);
-        when(racaRepository.saveAll(any())).thenReturn(new ArrayList<>());
-
-        Exception error = null;
-        try {
-            racaService.buscarRacasCatsAPI("teste");
-        } catch (Exception e){
-            error = e;
-        }
-
-        assertNotNull(error);
-        assertEquals(DataFormatException.class, error.getClass());
-    }
-
-    @Test
-    void testSalvarRacas(){
+    void testeSalvarRacas(){
         when(racaRepository.saveAll(any())).thenReturn(new ArrayList<Raca>());
         racaService.salvarRacas(new ArrayList<Raca>());
 
@@ -109,7 +86,7 @@ public class RacaServiceTest {
     }
 
     @Test
-    void testBuscarRacas(){
+    void testeBuscarRacas(){
         when(racaRepository.findAll()).thenReturn(new ArrayList<Raca>());
         racaService.buscarRacas();
 
@@ -118,7 +95,9 @@ public class RacaServiceTest {
 
     @Test
     void testeBuscarRacaPorOrigem(){
-        when(racaRepository.findByPaisOrigem(any())).thenReturn(Optional.of(new Raca()));
+        Raca raca = new Raca();
+        raca.setIdRaca(123l);
+        when(racaRepository.findByPaisOrigem(any())).thenReturn(Optional.of(raca));
         racaService.buscarRacaPorOrigem("teste");
 
         verify(racaRepository, Mockito.times(1)).findByPaisOrigem(any());
@@ -133,28 +112,42 @@ public class RacaServiceTest {
     }
 
     @Test
-    void testBuscarRacaPorId() {
-        when(racaRepository.findById(any())).thenReturn(Optional.of(new Raca()));
+    void testeBuscarRacaPorId() {
+        Raca raca = new Raca();
+        raca.setIdRaca(123l);
+        when(racaRepository.findById(any())).thenReturn(Optional.of(raca));
         when(fotoInfoService.buscarFotoPorIdRaca(anyString())).thenReturn(List.of(new FotoDto()));
         racaService.buscarRacaPorId("123");
 
-        verify(racaRepository, Mockito.times(1)).getById(anyLong());
+        verify(racaRepository, Mockito.times(1)).findById(any());
     }
 
     @Test
-    void testBuscarRacaPorIdExterno() {
-        when(racaRepository.findByIdExternoBreed(anyString())).thenReturn(Optional.of(new Raca()));
+    void testeBuscarRacaPorIdExterno() {
+        Raca raca = new Raca();
+        raca.setIdRaca(123l);
+        when(racaRepository.findByIdExternoBreed(anyString())).thenReturn(Optional.of(raca));
         racaService.buscarRacaPorIdExterno("123");
 
         verify(racaRepository, Mockito.times(1)).findByIdExternoBreed(anyString());
     }
 
     @Test
-    void testBuscarRacaPorNome() {
-        when(racaRepository.findByNome(anyString())).thenReturn(Optional.of(new Raca()));
+    void testeBuscarRacaPorNome() {
+        Raca raca = new Raca();
+        raca.setIdRaca(123l);
+        when(racaRepository.findByNome(anyString())).thenReturn(Optional.of(raca));
         racaService.buscarRacaPorNome("teste");
 
         verify(racaRepository, Mockito.times(1)).findByNome(anyString());
+    }
+
+    @Test
+    void testeVerificaCargaTabela() {
+        when(racaRepository.existsBy()).thenReturn(true);
+        racaService.verificaCargaTabela();
+
+        verify(racaRepository, Mockito.times(1)).existsBy();
     }
 
 }

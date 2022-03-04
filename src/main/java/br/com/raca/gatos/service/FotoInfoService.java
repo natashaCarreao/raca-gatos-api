@@ -102,8 +102,4 @@ public class FotoInfoService {
     private FotoDto transformarFotoEntityEmFotoDto(FotoInfo fotoInfo){
         return mapper.map(fotoInfo, FotoDto.class);
     }
-
-    private List<FotoDto> transformarListaRacaEntityEmListaRacaDto(Optional<FotoInfo> fotoInfos){
-        return fotoInfos.stream().map(this::transformarFotoEntityEmFotoDto).collect(Collectors.toList());
-    }
 }

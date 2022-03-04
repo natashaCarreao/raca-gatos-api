@@ -1,0 +1,59 @@
+server:
+  servlet:
+    context-path: /raca-gatos-api
+  port: 8080
+
+spring:
+  multipart:
+    enabled: false
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: update
+    show-sql: false
+  datasource:
+    url: jdbc:postgresql://192.168.15.30:15432/dashboard_gatos
+    username: postgres
+    password: postgres
+    initialization-mode: always
+    drive-class-name: org.postgresql.Drive
+
+
+management:
+  server:
+    port: 9000
+  endpoints:
+    web:
+      path-mapping:
+        health: health
+      exposure:
+        include: health, shutdown, prometheus
+  endpoint:
+    shutdown:
+      enabled: true
+    metrics:
+      enabled: true
+    health:
+      show-details: always
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+  trace:
+    http:
+      enabled: true
+
+the-cats-api:
+  url: https://api.thecatapi.com
+  api-key: 34ced915-c5b5-44e2-86b5-f72ed184b1d1
+
+logging:
+  level:
+    root: INFO
+
+cron:
+  inicia:
+    carga:
+      dados: 30 * * * * *

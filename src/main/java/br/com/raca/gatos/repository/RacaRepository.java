@@ -20,4 +20,6 @@ public interface RacaRepository extends JpaRepository<Raca, Long>, JpaSpecificat
     Optional<Raca> findByNome(String id);
 
     Optional<Raca> findById(Long id);
+
+    Boolean existsBy();
 }
