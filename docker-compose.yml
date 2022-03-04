@@ -1,0 +1,26 @@
+services:
+  dashboard-cats-db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "15432:5432"
+    networks:
+      - dashboard-cats-network
+
+  dashboard-cats-pgadmin:
+    image: 'dpage/pgadmin4'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "dashboard_cats@teste.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "15433:80"
+    depends_on:
+      - dashboard-cats-db
+    networks:
+      - dashboard-cats-network
+
+networks:
+  dashboard-cats-network:
+    driver: bridge
