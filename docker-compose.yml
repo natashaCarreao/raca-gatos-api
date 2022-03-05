@@ -1,26 +1,43 @@
+version: "3"
+
 services:
-  dashboard-cats-db:
+  raca-gatos-api:
+    image: 'docker.io/ntacarreao/raca-gatos-api'
+    depends_on:
+      - gatos-postgres-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://0.0.0.0:5432/dashboard_gatos
+      - SPRING_DATASOURCE_USER=postgres
+      - SPRING_DATASOURCE_PASS=postgres
+      - THE_CATS_API_KEY=34ced915-c5b5-44e2-86b5-f72ed184b1d1
+      - THE_CATS_API_URL=https://api.thecatapi.com
+    ports:
+      - 8080:8080
+    networks:
+      - gatos-network
+
+  gatos-postgres-db:
     image: postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=dashboard_gatos
     ports:
-      - "15432:5432"
+      - 15432:5432
     networks:
-      - dashboard-cats-network
-
+      - gatos-network
   dashboard-cats-pgadmin:
     image: 'dpage/pgadmin4'
     environment:
       PGADMIN_DEFAULT_EMAIL: "dashboard_cats@teste.com.br"
       PGADMIN_DEFAULT_PASSWORD: "admin"
     ports:
-      - "15433:80"
+      - 15433:80
     depends_on:
-      - dashboard-cats-db
+      - gatos-postgres-db
     networks:
-      - dashboard-cats-network
+      - gatos-network
 
 networks:
-  dashboard-cats-network:
+  gatos-network:
     driver: bridge

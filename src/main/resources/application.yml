@@ -12,9 +12,9 @@ spring:
       ddl-auto: update
     show-sql: false
   datasource:
-    url: jdbc:postgresql://192.168.15.30:15432/dashboard_gatos
-    username: postgres
-    password: postgres
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/dashboard_gatos}
+    username: ${SPRING_DATASOURCE_USER}
+    password: ${SPRING_DATASOURCE_PASS}
     initialization-mode: always
     drive-class-name: org.postgresql.Drive
 
@@ -46,8 +46,8 @@ management:
       enabled: true
 
 the-cats-api:
-  url: https://api.thecatapi.com
-  api-key: 34ced915-c5b5-44e2-86b5-f72ed184b1d1
+  url: ${THE_CATS_API_URL}
+  api-key: ${THE_CATS_API_KEY}
 
 logging:
   level:
