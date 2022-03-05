@@ -13,10 +13,10 @@ Antes de iniciar a aplicação será nescessário fazer o start do banco de dado
     No start, sera executada a carga inicial dos dados utilizados nas consultas de Raças
 
 Aplicação estará dispovivel na porta 8080
-Para verificar se aplição iniciou corretamente check o localhost:9000/actuator/health
+Para verificar se aplição iniciou corretamente cheque o localhost:9000/actuator/health
 
 ### Links e documentações:
-Documentações oficiais dos frameworks que foram ultilizados na cnsutrução desta aplicação
+Documentações oficiais dos frameworks que foram ultilizados na construção desta aplicação
 
 * [Official Gradle documentation](https://docs.gradle.org)
 * [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.0.0-SNAPSHOT/gradle-plugin/reference/html/)
