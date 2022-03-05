@@ -12,7 +12,7 @@ spring:
       ddl-auto: update
     show-sql: false
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/dashboard_gatos}
+    url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USER}
     password: ${SPRING_DATASOURCE_PASS}
     initialization-mode: always

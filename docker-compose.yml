@@ -6,7 +6,7 @@ services:
     depends_on:
       - gatos-postgres-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://0.0.0.0:5432/dashboard_gatos
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/dashboard_gatos
       - SPRING_DATASOURCE_USER=postgres
       - SPRING_DATASOURCE_PASS=postgres
       - THE_CATS_API_KEY=34ced915-c5b5-44e2-86b5-f72ed184b1d1
@@ -19,9 +19,10 @@ services:
   gatos-postgres-db:
     image: postgres
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=dashboard_gatos
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dashboard_gatos
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - 15432:5432
     networks:
